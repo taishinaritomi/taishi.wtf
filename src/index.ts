@@ -9,7 +9,12 @@ const birthday = new Date("2001-09-10");
 const app = new Hono();
 
 app.get("/", prettyJSON(), (c) => {
-  return c.json({ name, age: getAge(birthday) });
+  return c.json({
+    name,
+    age: getAge(birthday),
+    github: "https://github.com/taishinaritomi",
+    x: "https://x.com/taishinaritomi",
+  });
 });
 
 app.get("/check", prettyJSON(), (c) => {
