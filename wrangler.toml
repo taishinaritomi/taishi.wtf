@@ -1,3 +1,7 @@
-name = "wtf"
+name = "taishi-wtf"
 main = "src/index.ts"
 compatibility_date = "2023-08-23"
+
+routes = [
+	{ pattern = "taishi.wtf", custom_domain = true }
+]
