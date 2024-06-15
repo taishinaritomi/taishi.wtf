@@ -16,6 +16,7 @@ app.get("/check", prettyJSON(), (c) => {
   return c.json({
     client_ip: getIp(c.req.raw.headers),
     client_ip_v6: getIpV6(c.req.raw.headers),
+    json: Object.fromEntries(c.req.raw.headers.entries()),
   });
 });
 
