@@ -1,0 +1,13 @@
+{
+  "extends": "@tsconfig/strictest/tsconfig.json",
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "nodenext",
+    "noEmit": true,
+    "moduleResolution": "nodenext",
+    "allowImportingTsExtensions": true,
+    "preserveWatchOutput": true,
+    "jsx": "preserve",
+    "checkJs": false
+  }
+}
