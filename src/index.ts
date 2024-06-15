@@ -12,6 +12,7 @@ app.get("/", prettyJSON(), (c) => {
   return c.json({
     name,
     age: getAge(birthday),
+    location: "Tokyo, Japan",
     github: "https://github.com/taishinaritomi",
     x: "https://x.com/taishinaritomi",
   });
