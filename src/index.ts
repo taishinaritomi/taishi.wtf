@@ -20,7 +20,7 @@ app.get("/", prettyJSON(), (c) => {
 
 app.get("/check", prettyJSON(), (c) => {
   return c.json({
-    client_ip: getIp(c.req.raw.headers),
+    ip: getIp(c.req.raw.headers),
     user_agent: getUserAgent(c.req.raw.headers),
   });
 });
