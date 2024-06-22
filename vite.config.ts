@@ -21,6 +21,6 @@ export default defineConfig(({ mode }) => {
     ssr: {
       external: ["react", "react-dom"],
     },
-    plugins: [pages(), devServer({ adapter, entry: "src/index.ts" })],
+    plugins: [pages(), devServer({ adapter, entry: "src/index.tsx" })],
   };
 });
