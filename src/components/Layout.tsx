@@ -1,5 +1,3 @@
-import { DEV_SCRIPT_FILE, SCRIPT_FILE } from "../files";
-
 export function GlobalLayout(props: { children: JSX.Element }) {
   return (
     <html lang="en">
@@ -8,7 +6,7 @@ export function GlobalLayout(props: { children: JSX.Element }) {
         <meta content="width=device-width, initial-scale=1" name="viewport" />
         <script
           type="module"
-          src={import.meta.env.DEV ? DEV_SCRIPT_FILE : SCRIPT_FILE}
+          src={import.meta.env.DEV ? "/src/client.tsx" : "/static/client.js"}
         />
       </head>
       <body>{props.children}</body>
