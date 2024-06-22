@@ -10,6 +10,6 @@
     "jsx": "react-jsx",
     "jsxImportSource": "react",
     "checkJs": false,
-    "types": ["@cloudflare/workers-types"]
+    "types": ["@cloudflare/workers-types", "vite/client"]
   }
 }
