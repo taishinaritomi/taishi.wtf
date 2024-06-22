@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
-    "deploy": "vite build",
+    "build": "vite build",
     "fix": "biome check --write .",
     "check": "biome check ."
   },
