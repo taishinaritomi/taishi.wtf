@@ -3,20 +3,27 @@
   "version": "1.0.0",
   "author": "Taishi Naritomi",
   "license": "MIT",
+  "type": "module",
   "scripts": {
-    "dev": "wrangler dev src/index.ts",
-    "deploy": "wrangler deploy --minify src/index.ts",
+    "dev": "vite dev",
+    "deploy": "vite build",
     "fix": "biome check --write .",
     "check": "biome check ."
   },
   "dependencies": {
-    "hono": "^4.4.6"
+    "hono": "^4.4.6",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.23.1"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.8.1",
     "@cloudflare/workers-types": "^4.20240614.0",
+    "@hono/vite-cloudflare-pages": "^0.4.1",
+    "@hono/vite-dev-server": "^0.12.2",
     "@tsconfig/strictest": "^2.0.5",
     "typescript": "^5.4.5",
+    "vite": "^5.3.1",
     "wrangler": "^3.60.3"
   }
 }

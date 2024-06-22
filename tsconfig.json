@@ -2,12 +2,13 @@
   "extends": "@tsconfig/strictest/tsconfig.json",
   "compilerOptions": {
     "target": "esnext",
-    "module": "nodenext",
+    "module": "preserve",
     "noEmit": true,
-    "moduleResolution": "nodenext",
+    "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "preserveWatchOutput": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
     "checkJs": false,
     "types": ["@cloudflare/workers-types"]
   }
