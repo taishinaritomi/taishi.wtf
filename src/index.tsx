@@ -31,7 +31,7 @@ app.get(
     // 12 hours
     cacheControl: `public, max-age=${86400 / 2}`,
   }),
-  indexHandler,
+  indexHandler
 );
 
 app.get("/check", prettyJSON(), checkHandler);
@@ -54,14 +54,14 @@ app.get("*", async (c) => {
   return c.body(
     await renderToReadableStream(
       <StaticRouterProvider router={router} context={context} />,
-      renderOptions,
+      renderOptions
     ),
     {
       headers: {
         "Transfer-Encoding": "chunked",
         "Content-Type": "text/html; charset=UTF-8",
       },
-    },
+    }
   );
 });
 
