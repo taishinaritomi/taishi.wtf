@@ -1,2 +1,4 @@
 name = "taishi-wtf"
 pages_build_output_dir = "./dist"
+
+compatibility_flags = ["streams_enable_constructors"]

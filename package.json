@@ -7,13 +7,14 @@
   "scripts": {
     "dev": "vite dev",
     "build": "vite build --mode client && vite build",
+    "preview": "wrangler pages dev dist",
     "fix": "biome check --write .",
     "check": "biome check ."
   },
   "dependencies": {
     "hono": "^4.4.6",
-    "react": "19.0.0-rc-3563387fe3-20240621",
-    "react-dom": "19.0.0-rc-3563387fe3-20240621",
+    "react": "19.0.0-beta-26f2496093-20240514",
+    "react-dom": "19.0.0-beta-26f2496093-20240514",
     "react-router-dom": "^6.23.1"
   },
   "devDependencies": {
