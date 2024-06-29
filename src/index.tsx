@@ -34,20 +34,6 @@ app.get(
   }
 );
 
-app.get(
-  "/cache",
-  prettyJSON(),
-  cache({
-    cacheName: "top",
-    // 12 hours
-    cacheControl: `public, max-age=${86400 / 2}`,
-  }),
-  async (c) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    return c.json({ ok: true });
-  }
-);
-
 app.get("/check", prettyJSON(), (c) => {
   return c.json({
     ip: getIp(c.req.raw.headers),
