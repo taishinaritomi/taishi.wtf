@@ -9,7 +9,7 @@
     "build": "vite build --mode client && vite build",
     "preview": "wrangler pages dev dist",
     "fix": "biome check --write .",
-    "check": "biome check ."
+    "check": "biome check . && tsc --noEmit"
   },
   "dependencies": {
     "hono": "^4.4.6",
@@ -28,9 +28,5 @@
     "typescript": "^5.4.5",
     "vite": "^5.3.1",
     "wrangler": "^3.60.3"
-  },
-  "overrides": {
-    "@types/react": "npm:types-react@rc",
-    "@types/react-dom": "npm:types-react-dom@rc"
   }
 }

@@ -1,3 +1,8 @@
 export function Color() {
-  return <div>Color Piker</div>;
+  return (
+    <div>
+      <title>Color Piker</title>
+      <p>Color Piker</p>
+    </div>
+  );
 }

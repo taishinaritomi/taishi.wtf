@@ -1,19 +1,27 @@
 import { Hono } from "hono";
-import { Color } from "./components/Routes/Color";
-import { prettyJSON } from "./middlewares/pretty-json";
-import { getAge } from "./utils/get-age";
-import { getIp, getUserAgent } from "./utils/headers";
-import { createHonoRouter } from "./utils/hono-router";
-import { reactRenderer } from "./utils/react-renderer";
-
-const name = "Taishi Naritomi";
-const birthday = new Date("2001-09-10");
-
-const app = new Hono({ router: createHonoRouter() });
-
-app.use(reactRenderer);
-
 import { cache } from "hono/cache";
+import type ReactServerDom from "react-dom/server";
+// @ts-expect-error react-dom/server.edge
+import { renderToReadableStream } from "react-dom/server.edge";
+import type { RouteObject } from "react-router-dom";
+import {
+  StaticRouterProvider,
+  createStaticHandler,
+  createStaticRouter,
+} from "react-router-dom/server";
+import { indexHandler } from "./components/Routes";
+import { checkHandler } from "./components/Routes/check";
+import { prettyJSON } from "./middlewares/pretty-json";
+import { routes } from "./routes";
+
+declare module "hono" {
+  interface ContextRenderer {
+    // biome-ignore lint/style/useShorthandFunctionType: <explanation>
+    (content: JSX.Element): Response | Promise<Response>;
+  }
+}
+
+const app = new Hono();
 
 app.get(
   "/",
@@ -23,26 +31,38 @@ app.get(
     // 12 hours
     cacheControl: `public, max-age=${86400 / 2}`,
   }),
-  (c) => {
-    return c.json({
-      name,
-      age: getAge(birthday),
-      location: "Tokyo, Japan",
-      github: "https://github.com/taishinaritomi",
-      x: "https://x.com/taishinaritomi",
-    });
-  }
+  indexHandler,
 );
 
-app.get("/check", prettyJSON(), (c) => {
-  return c.json({
-    ip: getIp(c.req.raw.headers),
-    user_agent: getUserAgent(c.req.raw.headers),
-  });
-});
+app.get("/check", prettyJSON(), checkHandler);
 
-app.get("/color", async (c) => {
-  return c.render(<Color />);
+const renderOptions: ReactServerDom.RenderToReadableStreamOptions = {
+  bootstrapModules: [
+    import.meta.env.DEV ? "/src/client.tsx" : "/static/client.js",
+  ],
+};
+
+app.get("*", async (c) => {
+  const { query, dataRoutes } = createStaticHandler(routes);
+
+  const context = await query(c.req.raw);
+
+  if (context instanceof Response) throw context;
+
+  const router = createStaticRouter(dataRoutes as RouteObject[], context);
+
+  return c.body(
+    await renderToReadableStream(
+      <StaticRouterProvider router={router} context={context} />,
+      renderOptions,
+    ),
+    {
+      headers: {
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "text/html; charset=UTF-8",
+      },
+    },
+  );
 });
 
 export default app;

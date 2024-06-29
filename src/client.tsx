@@ -1,11 +1,13 @@
+import React from "react";
 import { hydrateRoot } from "react-dom/client";
-import { Color } from "./components/Routes/Color";
-import { createHonoRouter } from "./utils/hono-router";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { routes } from "./routes";
 
-const router = createHonoRouter<() => void>();
+const router = createBrowserRouter(routes);
 
-router.add("get", "/color", () => {
-  hydrateRoot(document.body, <Color />);
-});
-
-for (const [handler] of router.match("get", location.pathname)[0]) handler();
+hydrateRoot(
+  document.body,
+  <React.StrictMode>
+    <RouterProvider router={router} />
+  </React.StrictMode>,
+);
