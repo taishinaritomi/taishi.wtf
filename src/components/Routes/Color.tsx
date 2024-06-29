@@ -1,3 +1,3 @@
 export function Color() {
-  return <div>Hello word!!!</div>;
+  return <div>Color Piker</div>;
 }

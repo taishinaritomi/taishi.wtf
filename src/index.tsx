@@ -13,15 +13,26 @@ const app = new Hono({ router: createHonoRouter() });
 
 app.use(reactRenderer);
 
-app.get("/", prettyJSON(), (c) => {
-  return c.json({
-    name,
-    age: getAge(birthday),
-    location: "Tokyo, Japan",
-    github: "https://github.com/taishinaritomi",
-    x: "https://x.com/taishinaritomi",
-  });
-});
+import { cache } from "hono/cache";
+
+app.get(
+  "/",
+  prettyJSON(),
+  cache({
+    cacheName: "top",
+    // 12 hours
+    cacheControl: `public, max-age=${86400 / 2}`,
+  }),
+  (c) => {
+    return c.json({
+      name,
+      age: getAge(birthday),
+      location: "Tokyo, Japan",
+      github: "https://github.com/taishinaritomi",
+      x: "https://x.com/taishinaritomi",
+    });
+  }
+);
 
 app.get("/check", prettyJSON(), (c) => {
   return c.json({
