@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Outlet } from "react-router-dom";
 
 export function GlobalLayout() {
@@ -8,7 +9,9 @@ export function GlobalLayout() {
         <meta content="width=device-width, initial-scale=1" name="viewport" />
       </head>
       <body>
-        <Outlet />
+        <Suspense>
+          <Outlet />
+        </Suspense>
       </body>
     </html>
   );

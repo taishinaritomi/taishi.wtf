@@ -1,8 +1,9 @@
+import { Suspense } from "react";
+
 export function Color() {
   return (
-    <div>
+    <Suspense>
       <title>Color Piker</title>
-      <p>Color Piker</p>
-    </div>
+    </Suspense>
   );
 }

@@ -1,6 +1,5 @@
 import { Hono } from "hono";
 import { cache } from "hono/cache";
-import type ReactServerDom from "react-dom/server";
 // @ts-expect-error react-dom/server.edge
 import { renderToReadableStream } from "react-dom/server.edge";
 import type { RouteObject } from "react-router-dom";
@@ -13,6 +12,8 @@ import { indexHandler } from "./components/Routes";
 import { checkHandler } from "./components/Routes/check";
 import { prettyJSON } from "./middlewares/pretty-json";
 import { routes } from "./routes";
+import "./utils/createSatori";
+import { createSatori } from "./utils/createSatori";
 
 declare module "hono" {
   interface ContextRenderer {
@@ -31,16 +32,21 @@ app.get(
     // 12 hours
     cacheControl: `public, max-age=${86400 / 2}`,
   }),
-  indexHandler
+  indexHandler,
 );
 
 app.get("/check", prettyJSON(), checkHandler);
+app.get("/image/*", async (c) => {
+  const satori = await createSatori();
 
-const renderOptions: ReactServerDom.RenderToReadableStreamOptions = {
-  bootstrapModules: [
-    import.meta.env.DEV ? "/src/client.tsx" : "/static/client.js",
-  ],
-};
+  const svg = await satori(<div />, {
+    width: 1200,
+    height: 630,
+    fonts: [],
+  });
+
+  return c.json({ svg });
+});
 
 app.get("*", async (c) => {
   const { query, dataRoutes } = createStaticHandler(routes);
@@ -54,14 +60,18 @@ app.get("*", async (c) => {
   return c.body(
     await renderToReadableStream(
       <StaticRouterProvider router={router} context={context} />,
-      renderOptions
+      {
+        bootstrapModules: [
+          import.meta.env.DEV ? "/src/client.tsx" : "/static/client.js",
+        ],
+      },
     ),
     {
       headers: {
         "Transfer-Encoding": "chunked",
         "Content-Type": "text/html; charset=UTF-8",
       },
-    }
+    },
   );
 });
 
