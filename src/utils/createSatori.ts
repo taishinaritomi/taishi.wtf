@@ -1,11 +1,14 @@
 import satori, { init as initSatori } from "satori/wasm";
 import initYoga from "yoga-wasm-web";
 
-import wasmUrl from "yoga-wasm-web/dist/yoga.wasm?url";
+import YOGA_WASM from "yoga-wasm-web/dist/yoga.wasm?url";
 
 async function init() {
-  const wasm = (await import(/* @vite-ignore */ `${wasmUrl}?module`)).default;
-  const yoga = await initYoga(wasm);
+  const { default: yogawasm } = await import(
+    /* @vite-ignore */ `${YOGA_WASM}?module`
+  );
+
+  const yoga = await initYoga(yogawasm);
   return initSatori(yoga);
 }
 
