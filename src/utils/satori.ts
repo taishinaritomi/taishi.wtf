@@ -29,7 +29,9 @@ export function getSatori() {
   });
 }
 
-const interLatin400 = Buffer.from(interLatin400Row, "hex");
+const interLatin400 = new Uint8Array(
+  interLatin400Row.match(/../g).map((h: string) => Number.parseInt(h, 16))
+).buffer;
 
 export function getSatoriFonts(): Font[] {
   return [
