@@ -12,6 +12,7 @@
     "check": "biome check . && tsc --noEmit"
   },
   "dependencies": {
+    "@fontsource/inter": "^5.0.19",
     "hono": "^4.4.13",
     "react": "19.0.0-beta-26f2496093-20240514",
     "react-dom": "19.0.0-beta-26f2496093-20240514",

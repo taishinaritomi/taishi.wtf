@@ -12,8 +12,8 @@ import { indexHandler } from "./components/Routes";
 import { checkHandler } from "./components/Routes/check";
 import { prettyJSON } from "./middlewares/pretty-json";
 import { routes } from "./routes";
-import "./utils/createSatori";
-import { createSatori } from "./utils/createSatori";
+import "./utils/satori";
+import { getSatori, getSatoriFonts } from "./utils/satori";
 
 declare module "hono" {
   interface ContextRenderer {
@@ -37,15 +37,33 @@ app.get(
 
 app.get("/check", prettyJSON(), checkHandler);
 app.get("/image/*", async (c) => {
-  const satori = await createSatori();
+  const satori = await getSatori();
 
-  const svg = await satori(<div />, {
-    width: 1200,
-    height: 630,
-    fonts: [],
+  const svg = await satori(
+    <div
+      style={{
+        width: "100%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "100%",
+        backgroundColor: "#00ffff",
+        fontSize: 36,
+      }}
+    >
+      1200 x 630
+    </div>,
+    {
+      // embedFont: false,
+      width: 1200,
+      height: 630,
+      fonts: getSatoriFonts(),
+    },
+  );
+
+  return c.body(svg, 200, {
+    "Content-Type": "image/svg+xml",
   });
-
-  return c.json({ svg });
 });
 
 app.get("*", async (c) => {
