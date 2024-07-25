@@ -30,7 +30,7 @@ app.get(
     // 12 hours
     cacheControl: `public, max-age=${86400 / 2}`,
   }),
-  indexHandler
+  indexHandler,
 );
 
 app.get("/check", prettyJSON(), checkHandler);
@@ -51,14 +51,14 @@ app.get("*", async (c) => {
         bootstrapModules: [
           import.meta.env.DEV ? "/src/client.tsx" : "/static/client.js",
         ],
-      }
+      },
     ),
     {
       headers: {
         "Transfer-Encoding": "chunked",
         "Content-Type": "text/html; charset=UTF-8",
       },
-    }
+    },
   );
 });
 
