@@ -1,9 +1,6 @@
 name: "setup-node"
 runs:
   using: "composite"
-  permissions:
-    id-token: write
-    contents: read
   steps:
     - uses: google-github-actions/auth@v1
       with:
