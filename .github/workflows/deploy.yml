@@ -45,6 +45,7 @@ jobs:
       - uses: google-github-actions/deploy-cloudrun@v1
         id: deploy
         with:
+          flags: "--allow-unauthenticated"
           service: ${{ secrets.GCP_SERVICE_NAME }}
           region: ${{ secrets.GCP_REGION }}
           metadata: container-production.yaml
