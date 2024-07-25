@@ -6,14 +6,11 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    name: Deploy
-    permissions:
-      id-token: write
-      contents: read
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/setup-node
-      - uses: google-github-actions/auth@v1
-        with:
-          workload_identity_provider: '${{ secrets.GCP_WIF_PROVIDER }}'
-          service_account: '${{ secrets.GCP_WIF_SERVICE_ACCOUNT }}'
+      - uses: ./.github/actions/setup-gcp-auth
+      # - uses: google-github-actions/auth@v1
+      #   with:
+      #     workload_identity_provider: '${{ secrets.GCP_WIF_PROVIDER }}'
+      #     service_account: '${{ secrets.GCP_WIF_SERVICE_ACCOUNT }}'
