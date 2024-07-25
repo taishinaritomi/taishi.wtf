@@ -42,7 +42,7 @@ jobs:
           export ENVIRONMENT="production"
           envsubst < ./api/service.yaml > container-production.yaml
           cat container-production.yaml
-      - uses: google-github-actions/deploy-cloudrun@v0
+      - uses: google-github-actions/deploy-cloudrun@v1
         id: deploy
         with:
           service: ${{ secrets.GCP_SERVICE_NAME }}
