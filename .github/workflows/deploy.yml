@@ -17,17 +17,16 @@ jobs:
         with:
           workload_identity_provider: '${{ secrets.GCP_WIF_PROVIDER }}'
           service_account: '${{ secrets.GCP_WIF_SERVICE_ACCOUNT }}'
-      - run: gcloud run services list
-      # - uses: 'docker/login-action@v1'
-      #   id: docker-auth
-      #   with:
-      #     username: 'oauth2accesstoken'
-      #     password: '${{ steps.gcp-auth.outputs.access_token }}'
-      #     registry: '${{ secrets.GCP_REGION }}-docker.pkg.dev'
-      # - uses: docker/build-push-action@v3
-      #   id: build-image
-      #   with:
-      #     context: './api'
-      #     push: true
-      #     tags: |
-      #       ${{ vars.GCP_REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ vars.GCP_ARTIFACT_REPO }}/${{ vars.GCP_SERVICE_NAME }}:${{ inputs.ref }}
+      - uses: 'docker/login-action@v1'
+        id: docker-auth
+        with:
+          username: 'oauth2accesstoken'
+          password: '${{ steps.gcp-auth.outputs.access_token }}'
+          registry: '${{ secrets.GCP_REGION }}-docker.pkg.dev'
+      - uses: docker/build-push-action@v3
+        id: build-image
+        with:
+          context: './api'
+          push: true
+          tags: |
+            ${{ vars.GCP_REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ vars.GCP_ARTIFACT_REPO }}/${{ vars.GCP_SERVICE_NAME }}:${{ inputs.ref }}
