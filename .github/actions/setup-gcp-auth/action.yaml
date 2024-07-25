@@ -1,8 +1,0 @@
-name: "setup-node"
-runs:
-  using: "composite"
-  steps:
-    - uses: google-github-actions/auth@v1
-      with:
-        workload_identity_provider: '${{ secrets.GCP_WIF_PROVIDER }}'
-        service_account: '${{ secrets.GCP_WIF_SERVICE_ACCOUNT }}'
