@@ -5,9 +5,9 @@ runs:
     - uses: pnpm/action-setup@v2
       with:
         version: "9.x"
-    # - uses: actions/setup-node@v3
-    #   with:
-    #     node-version: "20.x"
-    #     cache: pnpm
-    # - run: pnpm install
-    #   shell: bash
+    - uses: actions/setup-node@v3
+      with:
+        node-version: "20.x"
+        cache: pnpm
+    - run: pnpm i --frozen-lockfile
+      shell: bash
