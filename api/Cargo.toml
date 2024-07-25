@@ -1,0 +1,12 @@
+[package]
+name = "taishi-wtf-image"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+axum = "0.7.5"
+clap = {version = "4.5.10", features = ["derive", "env"] }
+dotenvy = "0.15.7"
+tokio = { version = "1", features = ["full"] }
