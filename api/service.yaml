@@ -1,0 +1,14 @@
+kind: Service
+metadata:
+  name: ${SERVICE_NAME}
+spec:
+  template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/maxScale: '2'
+    spec:
+      containers:
+      - image: ${CONTAINER_IMAGE}
+  traffic:
+  - percent: 100
+    latestRevision: true

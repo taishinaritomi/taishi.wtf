@@ -40,7 +40,7 @@ jobs:
           export REVISION_TAG="${{ github.sha }}"
           export CLOUD_RUN_SA="${{ secrets.GCP_CLOUD_RUN_SA }}"
           export ENVIRONMENT="production"
-          envsubst < ./service-yaml/container.yaml > container-production.yaml
+          envsubst < ./api/service.yaml > container-production.yaml
           cat container-production.yaml
       - uses: google-github-actions/deploy-cloudrun@v0
         id: deploy
