@@ -6,4 +6,4 @@ COPY . /app
 
 RUN cargo build --release
 
-CMD ["/app/target/release/taishi-wtf-image"]
+CMD ["/app/target/release/taishi-wtf-api"]
