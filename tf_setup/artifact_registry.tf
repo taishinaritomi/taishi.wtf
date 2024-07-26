@@ -10,7 +10,6 @@ resource "google_artifact_registry_repository" "registry" {
   }
 }
 
-
 resource "google_service_account" "registry_reader" {
   account_id   = "registry-reader"
   display_name = "Service account for Artifact Registry Reader"

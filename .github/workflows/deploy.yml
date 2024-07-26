@@ -39,3 +39,4 @@ jobs:
           terraform apply -var-file variables.tfvars -auto-approve
         env:
           TF_VAR_api_image_id: "${{ vars.API_IMAGE_ID_BASE }}@${{ steps.docker-image.outputs.imageid }}"
+          TF_VAR_service_account_name: "${{ vars.GCP_WIF_SERVICE_ACCOUNT }}"

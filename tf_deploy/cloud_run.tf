@@ -21,6 +21,8 @@ resource "google_cloud_run_v2_service" "taishi_wtf_api" {
   client   = "terraform"
 
   template {
+    service_account = var.service_account_name
+
     scaling {
       min_instance_count = 0
       max_instance_count = 2
