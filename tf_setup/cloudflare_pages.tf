@@ -20,13 +20,13 @@ resource "cloudflare_pages_project" "taishi_wtf" {
     }
   }
 
-  deployment_configs {
-    production {
-      environment_variables = {
-        API_URL = ""
-      }
-    }
-  }
+  # deployment_configs {
+  #   production {
+  #     environment_variables = {
+  #       API_URL = ""
+  #     }
+  #   }
+  # }
 }
 
 resource "cloudflare_pages_domain" "taishi_wtf_domain" {
@@ -42,4 +42,3 @@ resource "cloudflare_record" "cloudflare_pages" {
   type = "CNAME"
   proxied = true
 }
-
