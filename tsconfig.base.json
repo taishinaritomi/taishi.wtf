@@ -7,9 +7,6 @@
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "preserveWatchOutput": true,
-    "jsx": "react-jsx",
-    "jsxImportSource": "react",
-    "checkJs": false,
-    "types": ["@cloudflare/workers-types", "vite/client"]
+    "checkJs": false
   }
 }

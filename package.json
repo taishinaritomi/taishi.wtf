@@ -1,38 +1,21 @@
 {
-  "name": "taishi.wtf",
+  "name": "@taishi-wtf/monorepo",
   "version": "1.0.0",
   "author": "Taishi Naritomi",
   "license": "MIT",
   "type": "module",
+  "packageManager": "pnpm@9.6.0",
   "scripts": {
-    "dev": "vite dev",
-    "build": "vite build --mode client && vite build",
-    "preview": "wrangler pages dev dist",
+    "dev": "turbo dev",
+    "build": "turbo build",
     "fix": "biome check --write .",
-    "check": "biome check . && tsc --noEmit"
-  },
-  "dependencies": {
-    "@fontsource/inter": "^5.0.19",
-    "@resvg/resvg-wasm": "^2.6.2",
-    "hono": "^4.4.13",
-    "react": "19.0.0-beta-26f2496093-20240514",
-    "react-dom": "19.0.0-beta-26f2496093-20240514",
-    "react-router-dom": "^6.24.1",
-    "satori": "^0.10.14",
-    "yoga-wasm-web": "^0.3.3"
+    "check": "biome check . && turbo check"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",
-    "@cloudflare/workers-types": "^4.20240712.0",
-    "@hono/vite-cloudflare-pages": "^0.4.2",
-    "@hono/vite-dev-server": "^0.13.1",
     "@tsconfig/strictest": "^2.0.5",
     "@types/node": "^20.14.10",
-    "@types/react": "npm:types-react@rc",
-    "@types/react-dom": "npm:types-react-dom@rc",
-    "typescript": "^5.5.3",
-    "vite": "^5.3.3",
-    "vite-plugin-wasm-module-workers": "^0.0.2",
-    "wrangler": "^3.64.0"
+    "turbo": "^2.0.9",
+    "typescript": "^5.5.3"
   }
 }
