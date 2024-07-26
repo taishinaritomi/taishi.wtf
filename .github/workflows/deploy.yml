@@ -12,40 +12,40 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/setup-node
-      - uses: google-github-actions/auth@v1
-        id: gcp-auth
-        with:
-          token_format: 'access_token'
-          workload_identity_provider: '${{ secrets.GCP_WIF_PROVIDER }}'
-          service_account: '${{ secrets.GCP_WIF_SERVICE_ACCOUNT }}'
-      - run: gcloud run services list
-      - uses: 'docker/login-action@v1'
-        id: docker-auth
-        with:
-          username: 'oauth2accesstoken'
-          password: '${{ steps.gcp-auth.outputs.access_token }}'
-          registry: '${{ secrets.GCP_REGION }}-docker.pkg.dev'
-      - uses: docker/build-push-action@v3
-        id: build-image
-        with:
-          context: './api'
-          push: true
-          tags: |
-            ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_ARTIFACT_REPO }}/${{ secrets.GCP_SERVICE_NAME }}:${{ github.sha }}
-      - name: 'setenv'
-        run: |-
-          export CONTAINER_IMAGE="${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_ARTIFACT_REPO }}/${{ secrets.GCP_SERVICE_NAME }}:${{ github.sha }}"
-          export SERVICE_NAME="${{ secrets.GCP_SERVICE_NAME }}"
-          export PROJECT_ID="${{ secrets.GCP_PROJECT_ID }}"
-          export REVISION_TAG="${{ github.sha }}"
-          export CLOUD_RUN_SA="${{ secrets.GCP_CLOUD_RUN_SA }}"
-          export ENVIRONMENT="production"
-          envsubst < ./api/service.yaml > container-production.yaml
-          cat container-production.yaml
-      - uses: google-github-actions/deploy-cloudrun@v1
-        id: deploy
-        with:
-          flags: " --allow-unauthenticated"
-          service: ${{ secrets.GCP_SERVICE_NAME }}
-          region: ${{ secrets.GCP_REGION }}
-          metadata: container-production.yaml
+      # - uses: google-github-actions/auth@v1
+      #   id: gcp-auth
+      #   with:
+      #     token_format: 'access_token'
+      #     workload_identity_provider: '${{ secrets.GCP_WIF_PROVIDER }}'
+      #     service_account: '${{ secrets.GCP_WIF_SERVICE_ACCOUNT }}'
+      # - run: gcloud run services list
+      # - uses: 'docker/login-action@v1'
+      #   id: docker-auth
+      #   with:
+      #     username: 'oauth2accesstoken'
+      #     password: '${{ steps.gcp-auth.outputs.access_token }}'
+      #     registry: '${{ secrets.GCP_REGION }}-docker.pkg.dev'
+      # - uses: docker/build-push-action@v3
+      #   id: build-image
+      #   with:
+      #     context: './api'
+      #     push: true
+      #     tags: |
+      #       ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_ARTIFACT_REPO }}/${{ secrets.GCP_SERVICE_NAME }}:${{ github.sha }}
+      # - name: 'setenv'
+      #   run: |-
+      #     export CONTAINER_IMAGE="${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_ARTIFACT_REPO }}/${{ secrets.GCP_SERVICE_NAME }}:${{ github.sha }}"
+      #     export SERVICE_NAME="${{ secrets.GCP_SERVICE_NAME }}"
+      #     export PROJECT_ID="${{ secrets.GCP_PROJECT_ID }}"
+      #     export REVISION_TAG="${{ github.sha }}"
+      #     export CLOUD_RUN_SA="${{ secrets.GCP_CLOUD_RUN_SA }}"
+      #     export ENVIRONMENT="production"
+      #     envsubst < ./api/service.yaml > container-production.yaml
+      #     cat container-production.yaml
+      # - uses: google-github-actions/deploy-cloudrun@v1
+      #   id: deploy
+      #   with:
+      #     flags: " --allow-unauthenticated"
+      #     service: ${{ secrets.GCP_SERVICE_NAME }}
+      #     region: ${{ secrets.GCP_REGION }}
+      #     metadata: container-production.yaml
