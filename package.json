@@ -9,7 +9,10 @@
     "dev": "turbo dev",
     "build": "turbo build",
     "fix": "biome check --write . && terraform fmt",
-    "check": "biome check . && turbo check"
+    "check": "biome check . && turbo check",
+    "tf:setup": "cd tf_setup && terraform apply -var-file variables.tfvars",
+    "tf:deploy:plan": "cd tf_deploy && terraform plan -var-file variables.tfvars",
+    "tf:deploy": "cd tf_deploy && terraform apply -var-file variables.tfvars"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",
