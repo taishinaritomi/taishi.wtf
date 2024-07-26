@@ -34,3 +34,12 @@ resource "cloudflare_pages_domain" "taishi_wtf_domain" {
   project_name = cloudflare_pages_project.taishi_wtf.name
   domain       = var.cf_pages_domain
 }
+
+resource "cloudflare_record" "cloudflare_pages" {
+  zone_id = var.cf_zone_id
+  name = "taishi.wtf"
+  value = cloudflare_pages_project.taishi_wtf.subdomain
+  type = "CNAME"
+  proxied = true
+}
+

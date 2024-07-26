@@ -29,3 +29,7 @@ variable "cf_api_token" {
 variable "cf_account_id" {
   type = string
 }
+
+variable "cf_zone_id" {
+  type = string
+}
