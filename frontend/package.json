@@ -14,7 +14,8 @@
     "hono": "^4.4.13",
     "react": "19.0.0-beta-26f2496093-20240514",
     "react-dom": "19.0.0-beta-26f2496093-20240514",
-    "react-router-dom": "^6.24.1"
+    "react-router-dom": "^6.24.1",
+    "@taishi-wtf/empty": "workspace:*"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240712.0",

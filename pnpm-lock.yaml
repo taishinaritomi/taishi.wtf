@@ -26,6 +26,9 @@ importers:
 
   frontend:
     dependencies:
+      '@taishi-wtf/empty':
+        specifier: workspace:*
+        version: link:../packages/empty
       hono:
         specifier: ^4.4.13
         version: 4.4.13
@@ -60,6 +63,8 @@ importers:
       wrangler:
         specifier: ^3.64.0
         version: 3.64.0(@cloudflare/workers-types@4.20240712.0)
+
+  packages/empty: {}
 
 packages:
 
