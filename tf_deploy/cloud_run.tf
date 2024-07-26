@@ -15,10 +15,6 @@ resource "google_cloud_run_service_iam_policy" "policy" {
   policy_data = data.google_iam_policy.cloud_run_public.policy_data
 }
 
-provider "google" {
-    project = var.gcp_project
-}
-
 resource "google_cloud_run_v2_service" "taishi_wtf_api" {
   name     = "taishi-wtf-api"
   location = var.gcp_cloud_run_location
