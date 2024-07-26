@@ -1,3 +1,6 @@
+# provider = "projects/{project_number}/locations/global/workloadIdentityPools/github-actions-workload-pool/providers/github-actions"
+# service_account = "github-actions@{project_id}.iam.gserviceaccount.com"
+
 resource "google_iam_workload_identity_pool" "github_actions_workload_pool" {
   workload_identity_pool_id = "github-actions-workload-pool"
   description               = "Workload Identity Pool for GitHub Actions"

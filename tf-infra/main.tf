@@ -1,7 +1,7 @@
 # setup gcloud
 # gcloud init
 # gcloud auth application-default login
-# gcloud config set project {{project_id}}
+# gcloud config set project {project_id}
 
 terraform {
   backend "gcs" {

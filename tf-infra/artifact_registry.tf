@@ -1,3 +1,6 @@
+
+# base_id = "{gcp_artifact_registry_location}-docker.pkg.dev/{project_id}/registry/api"
+
 resource "google_artifact_registry_repository" "registry" {
   location      = var.gcp_artifact_registry_location
   repository_id = "registry"
