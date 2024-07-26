@@ -7,6 +7,6 @@
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "preserveWatchOutput": true,
-    "checkJs": false,
+    "checkJs": false
   }
 }

@@ -20,7 +20,11 @@ declare module "hono" {
   }
 }
 
-const app = new Hono();
+type Bindings = {
+  API_URL: string;
+};
+
+const app = new Hono<{ Bindings: Bindings }>();
 
 app.get(
   "/",
@@ -32,6 +36,10 @@ app.get(
   }),
   indexHandler,
 );
+
+app.get("/hello", (c) => {
+  return fetch(c.env.API_URL);
+});
 
 app.get("/check", prettyJSON(), checkHandler);
 

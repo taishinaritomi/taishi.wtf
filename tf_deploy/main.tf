@@ -1,3 +1,8 @@
+# terraform
+# terraform init
+# terraform plan -var-file=variables.tfvars
+# terraform apply -var-file=variables.tfvars
+
 terraform {
   backend "gcs" {
     # gcloud storage buckets create gs://taishi-wtf-deploy-terraform-state --location=ASIA-NORTHEAST1

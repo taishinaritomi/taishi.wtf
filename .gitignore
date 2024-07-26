@@ -10,3 +10,4 @@ target
 
 .env
 .terraform
+*.secret.tfvars
