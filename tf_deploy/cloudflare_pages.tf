@@ -20,13 +20,13 @@ resource "cloudflare_pages_project" "taishi_wtf" {
     }
   }
 
-  # deployment_configs {
-  #   production {
-  #     environment_variables = {
-  #       API_URL = ""
-  #     }
-  #   }
-  # }
+  deployment_configs {
+    production {
+      environment_variables = {
+        API_URL = google_cloud_run_v2_service.taishi_wtf_api.uri
+      }
+    }
+  }
 }
 
 resource "cloudflare_pages_domain" "taishi_wtf_domain" {
@@ -37,8 +37,8 @@ resource "cloudflare_pages_domain" "taishi_wtf_domain" {
 
 resource "cloudflare_record" "cloudflare_pages" {
   zone_id = var.cf_zone_id
-  name = "taishi.wtf"
-  value = cloudflare_pages_project.taishi_wtf.subdomain
-  type = "CNAME"
+  name    = "taishi.wtf"
+  value   = cloudflare_pages_project.taishi_wtf.subdomain
+  type    = "CNAME"
   proxied = true
 }

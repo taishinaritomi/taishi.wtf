@@ -21,7 +21,7 @@ resource "google_cloud_run_v2_service" "taishi_wtf_api" {
   client   = "terraform"
 
   template {
-    service_account = var.service_account_name
+    service_account = var.gcp_cloud_run_service_account
 
     scaling {
       min_instance_count = 0
@@ -31,7 +31,7 @@ resource "google_cloud_run_v2_service" "taishi_wtf_api" {
     max_instance_request_concurrency = 200
 
     containers {
-      image = var.api_image_id
+      image = var.gcp_cloud_run_api_image_id
     }
   }
 }
