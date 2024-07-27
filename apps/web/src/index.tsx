@@ -34,7 +34,7 @@ app.get(
     // 12 hours
     cacheControl: `public, max-age=${86400 / 2}`,
   }),
-  indexHandler
+  indexHandler,
 );
 
 app.get("/hello", (c) => {
@@ -57,14 +57,14 @@ app.get("*", async (c) => {
       <StaticRouterProvider router={router} context={context} />,
       {
         bootstrapModules: [import.meta.env.CLIENT_ENTRY],
-      }
+      },
     ),
     {
       headers: {
         "Transfer-Encoding": "chunked",
         "Content-Type": "text/html; charset=UTF-8",
       },
-    }
+    },
   );
 });
 

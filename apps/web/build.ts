@@ -1,7 +1,6 @@
 import type { RollupOutput } from "rollup";
 import { build } from "vite";
 
-
 const result = (await build({
   mode: "client",
 })) as RollupOutput;
