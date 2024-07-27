@@ -38,5 +38,6 @@ jobs:
           terraform plan -var-file variables.tfvars
           terraform apply -var-file variables.tfvars -auto-approve
         env:
-          TF_VAR_api_image_id: "${{ vars.API_IMAGE_ID_BASE }}@${{ steps.docker-image.outputs.imageid }}"
-          TF_VAR_service_account_name: "${{ vars.GCP_WIF_SERVICE_ACCOUNT }}"
+          TF_VAR_gcp_cloud_run_api_image_id: "${{ vars.API_IMAGE_ID_BASE }}@${{ steps.docker-image.outputs.imageid }}"
+          TF_VAR_gcp_cloud_run_service_account: "${{ vars.GCP_WIF_SERVICE_ACCOUNT }}"
+          TF_VAR_cf_api_token: "${{ secrets.CF_API_TOKEN }}"
