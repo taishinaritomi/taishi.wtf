@@ -4,9 +4,7 @@ export function Color() {
   return (
     <Suspense>
       <title>Color Piker</title>
-      <div>Color.tsx2</div>
+      <div>Color.tsx</div>
     </Suspense>
   );
 }
-
-console.log("Color.tsx2");
