@@ -3,7 +3,7 @@
 # terraform plan -var-file=variables.tfvars
 # terraform apply -var-file=variables.tfvars
 
-# setup variables.secret.tfvars
+# setup cloudflare api token
 # https://developers.cloudflare.com/fundamentals/api/get-started/create-token/
 # cf_api_token = ""
 
