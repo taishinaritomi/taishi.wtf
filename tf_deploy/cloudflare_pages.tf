@@ -7,7 +7,7 @@ resource "cloudflare_pages_project" "taishi_wtf" {
   build_config {
     build_command   = "pnpm run build"
     destination_dir = "dist"
-    root_dir        = "frontend"
+    root_dir        = "apps/web"
   }
 
   source {

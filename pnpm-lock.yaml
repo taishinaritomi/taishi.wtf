@@ -17,6 +17,9 @@ importers:
       '@types/node':
         specifier: ^20.14.10
         version: 20.14.10
+      tsx:
+        specifier: ^4.16.2
+        version: 4.16.2
       turbo:
         specifier: ^2.0.9
         version: 2.0.9
@@ -27,11 +30,11 @@ importers:
         specifier: ^3.64.0
         version: 3.64.0(@cloudflare/workers-types@4.20240712.0)
 
-  frontend:
+  apps/web:
     dependencies:
       '@taishi-wtf/empty':
         specifier: workspace:*
-        version: link:../packages/empty
+        version: link:../../packages/empty
       hono:
         specifier: ^4.4.13
         version: 4.4.13
@@ -679,6 +682,9 @@ packages:
   get-source@2.0.12:
     resolution: {integrity: sha512-X5+4+iD+HoSeEED+uwrQ07BOQr0kEDFMVqqpBuI+RaZBpBpHCuXxo70bjar6f0b0u/DQJsJ7ssurpP0V60Az+w==}
 
+  get-tsconfig@4.7.6:
+    resolution: {integrity: sha512-ZAqrLlu18NbDdRaHq+AKXzAmqIUPswPWKUchfytdAjiRFnCe5ojG2bstg6mRiZabkKfCoL/e98pbBELIV/YCeA==}
+
   glob-parent@5.1.2:
     resolution: {integrity: sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==}
     engines: {node: '>= 6'}
@@ -803,6 +809,9 @@ packages:
     resolution: {integrity: sha512-hOS089on8RduqdbhvQ5Z37A0ESjsqz6qnRcffsMU3495FuTdqSm+7bhJ29JvIOsBDEEnan5DPu9t3To9VRlMzA==}
     engines: {node: '>=8.10.0'}
 
+  resolve-pkg-maps@1.0.0:
+    resolution: {integrity: sha512-seS2Tj26TBVOC2NIc2rOe2y2ZO7efxITtLZcGSOnHHNOQ7CkiUBfw0Iw2ck6xkIhPwLhKNLS8BO+hEpngQlqzw==}
+
   resolve.exports@2.0.2:
     resolution: {integrity: sha512-X2UW6Nw3n/aMgDVy+0rSqgHlv39WZAlZrXCdnbyEiKm17DSqHX4MmQMaST3FbeWR5FTuRcUwYAziZajji0Y7mg==}
     engines: {node: '>=10'}
@@ -862,6 +871,11 @@ packages:
 
   tslib@2.6.3:
     resolution: {integrity: sha512-xNvxJEOUiWPGhUuUdQgAJPKOOJfGnIyKySOc09XkKsgdUV/3E2zvwZYdejjmRgPCgcym1juLH3226yA7sEFJKQ==}
+
+  tsx@4.16.2:
+    resolution: {integrity: sha512-C1uWweJDgdtX2x600HjaFaucXTilT7tgUZHbOE4+ypskZ1OP8CRCSDkCxG6Vya9EwaFIVagWwpaVAn5wzypaqQ==}
+    engines: {node: '>=18.0.0'}
+    hasBin: true
 
   turbo-darwin-64@2.0.9:
     resolution: {integrity: sha512-owlGsOaExuVGBUfrnJwjkL1BWlvefjSKczEAcpLx4BI7Oh6ttakOi+JyomkPkFlYElRpjbvlR2gP8WIn6M/+xQ==}
@@ -1424,6 +1438,10 @@ snapshots:
       data-uri-to-buffer: 2.0.2
       source-map: 0.6.1
 
+  get-tsconfig@4.7.6:
+    dependencies:
+      resolve-pkg-maps: 1.0.0
+
   glob-parent@5.1.2:
     dependencies:
       is-glob: 4.0.3
@@ -1534,6 +1552,8 @@ snapshots:
     dependencies:
       picomatch: 2.3.1
 
+  resolve-pkg-maps@1.0.0: {}
+
   resolve.exports@2.0.2: {}
 
   resolve@1.22.8:
@@ -1605,6 +1625,13 @@ snapshots:
       is-number: 7.0.0
 
   tslib@2.6.3: {}
+
+  tsx@4.16.2:
+    dependencies:
+      esbuild: 0.21.5
+      get-tsconfig: 4.7.6
+    optionalDependencies:
+      fsevents: 2.3.3
 
   turbo-darwin-64@2.0.9:
     optional: true

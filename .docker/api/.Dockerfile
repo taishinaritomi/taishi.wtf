@@ -2,7 +2,7 @@ FROM rust:1.77.2
 
 WORKDIR /app
 
-COPY ./api /app/api
+COPY ./apps/api /app/apps/api
 COPY ./Cargo.toml /app/Cargo.toml
 COPY ./Cargo.lock /app/Cargo.lock
 
