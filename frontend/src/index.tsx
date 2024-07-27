@@ -69,7 +69,7 @@ app.get("*", async (c) => {
       <StaticRouterProvider router={router} context={context} />,
       {
         bootstrapModules: [
-          import.meta.env.DEV ? "/src/client.tsx" : "/static/client.js",
+          import.meta.env.DEV ? "/src/client.tsx" : "/client.js",
         ],
       }
     ),
