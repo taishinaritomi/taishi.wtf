@@ -6,7 +6,7 @@
   "type": "module",
   "packageManager": "pnpm@9.6.0",
   "scripts": {
-    "dev": "turbo dev",
+    "dev": "turbo dev & cargo watch -x run",
     "build": "turbo build",
     "fix": "biome check --write . && terraform fmt",
     "check": "biome check . && turbo check"

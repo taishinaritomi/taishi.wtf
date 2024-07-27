@@ -34,12 +34,24 @@ app.get(
     // 12 hours
     cacheControl: `public, max-age=${86400 / 2}`,
   }),
-  indexHandler,
+  indexHandler
 );
 
 app.get("/hello", (c) => {
   return fetch(c.env.API_URL);
 });
+
+app.get(
+  "/hello-hono",
+  cache({
+    cacheName: "top",
+    // 12 hours
+    cacheControl: `public, max-age=${86400 / 2}`,
+  }),
+  (c) => {
+    return c.text("Hello Hono!");
+  }
+);
 
 app.get("/check", prettyJSON(), checkHandler);
 
@@ -59,14 +71,14 @@ app.get("*", async (c) => {
         bootstrapModules: [
           import.meta.env.DEV ? "/src/client.tsx" : "/static/client.js",
         ],
-      },
+      }
     ),
     {
       headers: {
         "Transfer-Encoding": "chunked",
         "Content-Type": "text/html; charset=UTF-8",
       },
-    },
+    }
   );
 });
 
