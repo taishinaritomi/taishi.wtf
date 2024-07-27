@@ -37,8 +37,27 @@ resource "cloudflare_pages_domain" "taishi_wtf_domain" {
 
 resource "cloudflare_record" "cloudflare_pages" {
   zone_id = var.cf_zone_id
-  name    = "taishi.wtf"
+  name    = var.cf_pages_domain
   value   = cloudflare_pages_project.taishi_wtf.subdomain
   type    = "CNAME"
   proxied = true
+}
+
+resource "cloudflare_ruleset" "taishi_wtf_cache_rules" {
+  zone_id     = var.cf_zone_id
+  name        = "taishi-wtf-cache-rules"
+  kind        = "zone"
+  phase       = "http_request_cache_settings"
+
+  rules {
+    expression = "(http.host eq \"${var.cf_pages_domain}\")"
+    enabled    = true
+    action     = "set_cache_settings"
+
+    action_parameters {
+      edge_ttl {
+        mode = "bypass_by_default"
+      }
+    }
+  }
 }
