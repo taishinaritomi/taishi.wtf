@@ -18,7 +18,7 @@ async fn main() {
     let app = Router::new().route(
         "/",
         get(|| async {
-            "Hello 2"
+            "Hello 3"
             // let mut headers = HeaderMap::new();
             // headers.insert(header::CONTENT_TYPE, "image/svg+xml".parse().unwrap());
 
