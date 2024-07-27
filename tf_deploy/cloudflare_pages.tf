@@ -22,7 +22,7 @@ resource "cloudflare_pages_project" "taishi_wtf" {
 
   deployment_configs {
     production {
-      environment_variables = {
+      secrets = {
         API_URL = google_cloud_run_v2_service.taishi_wtf_api.uri
       }
     }
