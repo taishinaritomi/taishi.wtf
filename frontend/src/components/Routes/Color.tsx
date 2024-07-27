@@ -7,3 +7,5 @@ export function Color() {
     </Suspense>
   );
 }
+
+console.log("Color.tsx");
