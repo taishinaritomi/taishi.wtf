@@ -3,22 +3,24 @@ import devServer from "@hono/vite-dev-server";
 import adapter from "@hono/vite-dev-server/cloudflare";
 import { defineConfig } from "vite";
 
-export default defineConfig(({ mode }) => {
+export default defineConfig(({ mode, command }) => {
   if (mode === "client") {
     return {
       build: {
         target: "esnext",
         rollupOptions: {
           input: "./src/client.tsx",
-          output: {
-            entryFileNames: "client.js",
-          },
         },
       },
     };
   }
 
   return {
+    define: {
+      ...(command === "serve" && {
+        "import.meta.env.CLIENT_ENTRY": JSON.stringify("/src/client.tsx"),
+      }),
+    },
     plugins: [
       pages({ entry: "src/index.tsx" }),
       devServer({ adapter, entry: "src/index.tsx" }),

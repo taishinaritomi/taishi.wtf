@@ -41,18 +41,6 @@ app.get("/hello", (c) => {
   return fetch(c.env.API_URL);
 });
 
-app.get(
-  "/hello-hono",
-  cache({
-    cacheName: "top",
-    // 12 hours
-    cacheControl: `public, max-age=${86400 / 2}`,
-  }),
-  (c) => {
-    return c.text("Hello Hono!");
-  }
-);
-
 app.get("/check", prettyJSON(), checkHandler);
 
 app.get("*", async (c) => {
@@ -68,9 +56,7 @@ app.get("*", async (c) => {
     await renderToReadableStream(
       <StaticRouterProvider router={router} context={context} />,
       {
-        bootstrapModules: [
-          import.meta.env.DEV ? "/src/client.tsx" : "/client.js",
-        ],
+        bootstrapModules: [import.meta.env.CLIENT_ENTRY],
       }
     ),
     {
