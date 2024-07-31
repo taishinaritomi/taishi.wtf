@@ -15,12 +15,14 @@ export default defineConfig(({ mode, command }) => {
     };
   }
 
+  const define = {} as Record<string, unknown>;
+
+  if (command === "serve") {
+    define["import.meta.env.CLIENT_ENTRY"] = JSON.stringify("/src/client.tsx");
+  }
+
   return {
-    define: {
-      ...(command === "serve" && {
-        "import.meta.env.CLIENT_ENTRY": JSON.stringify("/src/client.tsx"),
-      }),
-    },
+    define,
     plugins: [
       pages({ entry: "src/index.tsx" }),
       devServer({ adapter, entry: "src/index.tsx" }),

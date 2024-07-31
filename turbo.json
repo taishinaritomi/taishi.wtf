@@ -9,6 +9,9 @@
     "dev": {
       "cache": false
     },
+    "preview": {
+      "cache": false
+    },
     "check": {
       "cache": false
     }
