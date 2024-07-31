@@ -13,7 +13,7 @@ resource "google_project_service" "service_iam" {
   disable_on_destroy = false
 }
 
-resource "google_project_service" "iamcredentials" {
+resource "google_project_service" "service_iamcredentials" {
   service            = "iamcredentials.googleapis.com"
   disable_on_destroy = false
 }
