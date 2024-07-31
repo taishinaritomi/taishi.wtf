@@ -28,7 +28,7 @@ resource "google_cloud_run_v2_service" "taishi_wtf_api" {
       max_instance_count = 2
     }
 
-    max_instance_request_concurrency = 200
+    max_instance_request_concurrency = 50
 
     containers {
       image = var.gcp_cloud_run_api_image_id
