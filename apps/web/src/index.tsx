@@ -1,6 +1,4 @@
 import { Hono } from "hono";
-import { cache } from "hono/cache";
-// @ts-expect-error react-dom/server.edge
 import { renderToReadableStream } from "react-dom/server.edge";
 import type { RouteObject } from "react-router-dom";
 import {
@@ -8,9 +6,8 @@ import {
   createStaticHandler,
   createStaticRouter,
 } from "react-router-dom/server";
-import { indexHandler } from "./components/Routes";
-import { checkHandler } from "./components/Routes/check";
-import { prettyJSON } from "./middlewares/pretty-json";
+import { indexHandler, indexMiddleWare } from "./handlers";
+import { checkHandler, checkMiddleWare } from "./handlers/check";
 import { routes } from "./routes";
 
 declare module "hono" {
@@ -26,22 +23,12 @@ type Bindings = {
 
 const app = new Hono<{ Bindings: Bindings }>();
 
-app.get(
-  "/",
-  prettyJSON(),
-  cache({
-    cacheName: "top",
-    // 12 hours
-    cacheControl: `public, max-age=${86400 / 2}`,
-  }),
-  indexHandler,
-);
+app.get("/", indexMiddleWare(), indexHandler);
+app.get("/check", checkMiddleWare(), checkHandler);
 
 app.get("/hello", (c) => {
   return fetch(c.env.API_URL);
 });
-
-app.get("/check", prettyJSON(), checkHandler);
 
 app.get("*", async (c) => {
   const { query, dataRoutes } = createStaticHandler(routes);
@@ -56,7 +43,9 @@ app.get("*", async (c) => {
     await renderToReadableStream(
       <StaticRouterProvider router={router} context={context} />,
       {
-        bootstrapModules: [import.meta.env.CLIENT_ENTRY],
+        bootstrapModules: import.meta.env.CLIENT_ENTRY
+          ? [import.meta.env.CLIENT_ENTRY]
+          : [],
       },
     ),
     {
@@ -64,6 +53,7 @@ app.get("*", async (c) => {
         "Transfer-Encoding": "chunked",
         "Content-Type": "text/html; charset=UTF-8",
       },
+      status: context.statusCode,
     },
   );
 });

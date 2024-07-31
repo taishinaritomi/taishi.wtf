@@ -19,7 +19,6 @@ resource "google_project_service" "service_iamcredentials" {
 }
 
 resource "google_project_service" "service_run" {
-  project            = var.gcp_project
   service            = "run.googleapis.com"
   disable_on_destroy = false
 }

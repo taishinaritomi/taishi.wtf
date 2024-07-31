@@ -3,6 +3,10 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "jsxImportSource": "react",
-    "types": ["@cloudflare/workers-types", "./vite-env.d.ts"]
+    "types": [
+      "@cloudflare/workers-types",
+      "./vite-env.d.ts",
+      "./src/types/react-dom-server.d.ts"
+    ]
   }
 }
