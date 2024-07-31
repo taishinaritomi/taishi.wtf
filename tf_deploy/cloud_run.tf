@@ -32,6 +32,13 @@ resource "google_cloud_run_v2_service" "taishi_wtf_api" {
 
     containers {
       image = var.gcp_cloud_run_api_image_id
+
+      resources {
+        limits = {
+          cpu    = "2"
+          memory = "4Gi"
+        }
+      }
     }
   }
 }
