@@ -27,7 +27,9 @@ app.get("/", indexMiddleWare(), indexHandler);
 app.get("/check", checkMiddleWare(), checkHandler);
 
 app.get("/image", (c) => {
-  return fetch(c.env.API_URL);
+  const params = new URLSearchParams(c.req.query());
+
+  return fetch(`${c.env.API_URL}?${params.toString()}`);
 });
 
 app.get("*", async (c) => {
@@ -46,7 +48,7 @@ app.get("*", async (c) => {
         bootstrapModules: import.meta.env.CLIENT_ENTRY
           ? [import.meta.env.CLIENT_ENTRY]
           : [],
-      },
+      }
     ),
     {
       headers: {
@@ -54,7 +56,7 @@ app.get("*", async (c) => {
         "Content-Type": "text/html; charset=UTF-8",
       },
       status: context.statusCode,
-    },
+    }
   );
 });
 
