@@ -26,7 +26,7 @@ const app = new Hono<{ Bindings: Bindings }>();
 app.get("/", indexMiddleWare(), indexHandler);
 app.get("/check", checkMiddleWare(), checkHandler);
 
-app.get("/hello", (c) => {
+app.get("/image", (c) => {
   return fetch(c.env.API_URL);
 });
 

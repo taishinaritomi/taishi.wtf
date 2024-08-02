@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "run-p dev:*",
     "dev:turbo": "turbo dev",
-    "dev:cargo": "cargo watch -x run",
+    "dev:cargo": "RUST_BACKTRACE=1 cargo watch -x run",
     "build": "run-p build:*",
     "build:turbo": "turbo build",
     "build:cargo": "cargo build",

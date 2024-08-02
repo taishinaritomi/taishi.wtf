@@ -1,12 +1,15 @@
-use axum::{http::header, response::IntoResponse, routing::get, Router};
+use axum::{extract::Query, http::header, response::IntoResponse, routing::get, Router};
 use clap::Parser;
 use dotenvy::dotenv;
-use libvips::{ops, VipsImage};
+use libvips::ops::WebpsaveBufferOptions;
+use serde::Deserialize;
 #[derive(Debug, Parser)]
 pub struct Config {
     #[arg(long, env, hide_env_values = true)]
     pub port: u16,
 }
+
+const HOST: &str = "0.0.0.0";
 
 #[tokio::main]
 async fn main() {
@@ -14,66 +17,90 @@ async fn main() {
     let config = Config::parse();
 
     let app = Router::new().route("/", get(index_handler));
-    // .route("/a", get(index2_handler))
-    // .route("/b", get(index3_handler));
-    let addr = format!("0.0.0.0:{}", config.port);
+    let addr = format!("{}:{}", HOST, config.port);
     let listener = tokio::net::TcpListener::bind(addr).await.unwrap();
     axum::serve(listener, app).await.unwrap();
 }
 
-// async fn index_handler() -> impl IntoResponse {
-//     let pixel = Pixmap::new(2000, 2000).unwrap();
+#[derive(Default)]
+enum ImageFormat {
+    #[default]
+    Png,
+    Jpeg,
+    Webp,
+}
 
-//     println!("size={}", pixel.data().len());
-
-//     let data = pixel.encode_png().unwrap();
-
-//     println!("encoded: size={}", data.len());
-
-//     ([(header::CONTENT_TYPE, "image/png")], data)
+// impl Default for ImageFormat {
+//     fn default() -> Self {
+//         ImageFormat::PNG
+//     }
 // }
 
-// async fn index2_handler() -> impl IntoResponse {
-//     let width = 4000;
-//     let height = 4000;
-//     let start = Instant::now();
-//     let img = image::RgbImage::new(width, height);
-//     println!("created in {:?}", start.elapsed());
+impl ImageFormat {
+    fn from_str(format: &str) -> Self {
+        match format {
+            "png" => ImageFormat::Png,
+            "jpg" => ImageFormat::Jpeg,
+            "jpeg" => ImageFormat::Jpeg,
+            "webp" => ImageFormat::Webp,
+            _ => ImageFormat::Png,
+        }
+    }
 
-//     // let start = Instant::now();
-//     // for (x, y, pixel) in img.enumerate_pixels_mut() {
-//     //     let r = (0.3 * x as f32) as u8;
-//     //     let b = (0.3 * y as f32) as u8;
-//     //     *pixel = image::Rgb([r, 0, b]);
-//     // }
+    fn from_optional_str(format: Option<&String>) -> Self {
+        match format {
+            Some(format) => ImageFormat::from_str(format),
+            None => ImageFormat::default(),
+        }
+    }
 
-//     // println!("filled in {:?}", start.elapsed());
+    fn content_type<'a>(&self) -> &'a str {
+        match self {
+            ImageFormat::Png => "image/png",
+            ImageFormat::Jpeg => "image/jpeg",
+            ImageFormat::Webp => "image/webp",
+        }
+    }
+}
 
-//     let start = Instant::now();
-//     img.save("./target/test.png").unwrap();
-//     println!("saved in {:?}", start.elapsed());
+const IMAGE_MAX_SIZE: u16 = 20000;
 
-//     let mut buf = Cursor::new(Vec::new());
+fn clamp_size(size: Option<u16>) -> u16 {
+    match size {
+        Some(size) => {
+            if size > IMAGE_MAX_SIZE {
+                IMAGE_MAX_SIZE
+            } else {
+                size
+            }
+        }
+        None => 150,
+    }
+}
+#[derive(Deserialize)]
+struct Pagination {
+    width: Option<u16>,
+    height: Option<u16>,
+    format: Option<String>,
+}
 
-//     let start = Instant::now();
+async fn index_handler(query: Query<Pagination>) -> impl IntoResponse {
+    let width = clamp_size(query.width);
+    let height = clamp_size(query.height);
+    let format = ImageFormat::from_optional_str(query.format.as_ref());
 
-//     let encoder = JpegEncoder::new_with_quality(&mut buf, 5);
+    let image = libvips::VipsImage::image_new_matrix(width.into(), height.into()).unwrap();
 
-//     encoder
-//         .write_image(&img, width, height, ExtendedColorType::Rgb8)
-//         .unwrap();
+    let content_type = format.content_type();
 
-//     // img.write_to(&mut buf, image::ImageFormat::WebP).unwrap();
-//     println!("encoded in {:?}", start.elapsed());
+    let image_buf = match format {
+        ImageFormat::Png => libvips::ops::pngsave_buffer(&image).unwrap(),
+        ImageFormat::Jpeg => libvips::ops::jpegsave_buffer(&image).unwrap(),
+        ImageFormat::Webp => {
+            libvips::ops::webpsave_buffer_with_opts(&image, &WebpsaveBufferOptions::default())
+                .unwrap()
+        }
+    };
 
-//     ([(header::CONTENT_TYPE, "image/webp")], buf.into_inner())
-// }
-
-async fn index_handler() -> impl IntoResponse {
-    let image = VipsImage::image_new_matrix(10000, 10000).unwrap();
-
-    (
-        [(header::CONTENT_TYPE, "image/png")],
-        ops::pngsave_buffer(&image).unwrap(),
-    )
+    ([(header::CONTENT_TYPE, content_type)], image_buf)
 }

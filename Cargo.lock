@@ -1394,6 +1394,7 @@ dependencies = [
  "dotenvy",
  "image",
  "libvips",
+ "serde",
  "tiny-skia",
  "tokio",
 ]
