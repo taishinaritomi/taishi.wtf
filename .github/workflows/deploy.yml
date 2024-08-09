@@ -15,7 +15,6 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/actions/setup-node
       - uses: google-github-actions/auth@v1
         id: gcp-auth
         with:
