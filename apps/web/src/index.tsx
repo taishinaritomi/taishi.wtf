@@ -48,7 +48,7 @@ app.get("*", async (c) => {
         bootstrapModules: import.meta.env.CLIENT_ENTRY
           ? [import.meta.env.CLIENT_ENTRY]
           : [],
-      }
+      },
     ),
     {
       headers: {
@@ -56,7 +56,7 @@ app.get("*", async (c) => {
         "Content-Type": "text/html; charset=UTF-8",
       },
       status: context.statusCode,
-    }
+    },
   );
 });
 
