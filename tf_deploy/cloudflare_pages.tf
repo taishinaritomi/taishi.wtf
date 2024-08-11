@@ -38,7 +38,7 @@ resource "cloudflare_pages_domain" "taishi_wtf_domain" {
 resource "cloudflare_record" "cloudflare_pages" {
   zone_id = var.cf_zone_id
   name    = var.cf_pages_domain
-  value   = cloudflare_pages_project.taishi_wtf.subdomain
+  content   = cloudflare_pages_project.taishi_wtf.subdomain
   type    = "CNAME"
   proxied = true
 }
