@@ -125,8 +125,6 @@ fn image_handler_impl(size: &ImageSize, format: &ImageFormat) -> anyhow::Result<
     //     ..Default::default()
     // };
 
-    // let text =
-
     let image_buf = match format {
         ImageFormat::Png => libvips::ops::pngsave_buffer(&image),
         ImageFormat::Jpeg => libvips::ops::jpegsave_buffer(&image),

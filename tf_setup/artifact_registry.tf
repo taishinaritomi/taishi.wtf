@@ -8,6 +8,33 @@ resource "google_artifact_registry_repository" "registry" {
   docker_config {
     immutable_tags = false
   }
+
+  # cleanup_policy_dry_run = false
+
+  # cleanup_policies {
+  #   id     = "clean-untagged"
+  #   action = "DELETE"
+  #   condition {
+  #     tag_state = "UNTAGGED"
+  #   }
+  # }
+
+  # cleanup_policies {
+  #   id     = "keep-latest-versions"
+  #   action = "DELETE"
+  #   condition {
+  #     tag_state = "TAGGED"
+  #     older_than = "5d"
+  #   }
+  # }
+
+  # cleanup_policies {
+  #   id     = "keep-minimum-versions"
+  #   action = "KEEP"
+  #   most_recent_versions {
+  #     keep_count = 5
+  #   }
+  # }
 }
 
 output "registry_repository_url" {
