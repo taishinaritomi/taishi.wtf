@@ -12,19 +12,28 @@ resource "google_artifact_registry_repository" "registry" {
   cleanup_policy_dry_run = false
 
   cleanup_policies {
-    id     = "keep-latest-versions"
-    action = "DELETE"
+    id     = "keep-5-days"
+    action = "KEEP"
+
     condition {
-      older_than = "432000s" # 5 days
+      newer_than = "432000s" # 5 days
     }
   }
 
   cleanup_policies {
-    id     = "keep-minimum-versions"
+    id     = "keep-5-versions"
     action = "KEEP"
+
     most_recent_versions {
       keep_count = 5
     }
+  }
+
+  cleanup_policies {
+    id     = "delete-others"
+    action = "DELETE"
+
+    condition {}
   }
 }
 
