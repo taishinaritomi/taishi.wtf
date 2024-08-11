@@ -35,6 +35,7 @@ jobs:
           file: ".docker/api/.Dockerfile"
           tags: ${{ vars.API_IMAGE_ID_BASE }}:${{ github.sha }}
       - uses: hashicorp/setup-terraform@v3
+      - run: docker images
       - run: |
           cd tf_deploy
           terraform init
